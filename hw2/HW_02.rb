@@ -73,33 +73,35 @@ puts "You will have 3 chances to guess my secret number. My secret number is bet
 guesses_left = 3
 secret_number = 5
 
-
+#  Keep asking for secret number until no guesses left.
 while guesses_left > 0
+  
   puts "Please guess the secret number."
   player_guess = gets.strip.to_i
  
+  # If player guesses secret number inform player that he won
   if player_guess == secret_number
     
     puts "You won. You guessed my secret number."
     exit
     
-  elsif player_guess != secret_number
+  elsif player_guess != secret_number  # If player guessed wrong number decrease number of guesses.
     
     guesses_left -= 1
     
-    if player_guess > secret_number
+    if player_guess > secret_number # Notify player if guess higher than secret number
       
       puts "Your guess is higher than my secret number"
     
-    elsif player_guess < secret_number
+    elsif player_guess < secret_number # Notify player if guess is lower than secret number.
       
       puts "Your guess is lower than my secret number"
       
     end
   
   end 
-  puts "You have " + guesses_left.to_s + " guesses left"
+  puts "You have " + guesses_left.to_s + " guesses left"  # Notify player on guesses left.
 end
 
-
+# Notify player when no guesses left and inform player of secret number.
 puts "You have no guesses left. The secret number is " + secret_number.to_s
