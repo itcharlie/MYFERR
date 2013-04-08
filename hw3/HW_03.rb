@@ -51,3 +51,58 @@
 #Put your solution below this line.
 #
 ###############################################################################
+set_of_numbers = (1..10).to_a
+puts set_of_numbers
+
+secret_number = set_of_numbers.sample
+messages = Hash.new
+messages[:win] = "You won. You guessed my secret number"
+messages[:lose] = "You have no guesses left. The secret number is " + secret_number.to_s
+messages[:too_low] = "Your guess is lower than my secret number"
+messages[:too_high] = "Your guess is higher than my secret number"
+
+#### COPY OF OLD SOLUTION with some minor changes.
+puts "Hello There my name is Charlie. I am the creator of this game."
+puts "Please type in your name."
+player_name = gets.strip
+puts "Hi " + player_name + "!"
+puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
+
+guesses_left = 3
+
+#  Keep asking for secret number until no guesses left.
+while guesses_left > 0
+  
+  puts "Please guess the secret number."
+  player_guess = gets.strip.to_i
+ 
+  # If player guesses secret number inform player that he won
+  if player_guess == secret_number
+    
+    puts  messages[:win]
+    exit
+    
+  elsif player_guess != secret_number  # If player guessed wrong number decrease number of guesses.
+    
+    guesses_left -= 1
+    
+    if player_guess > secret_number # Notify player if guess higher than secret number
+      
+      puts messages[:too_high]
+    
+    elsif player_guess < secret_number # Notify player if guess is lower than secret number.
+      
+      puts messages[:too_low]
+
+    end
+  
+  end
+  if guesses_left >0
+    puts "You have " + guesses_left.to_s + " guesses left"  # Notify player on guesses left.
+  elsif guesses_left == 0
+    # Notify player when no guesses left and inform player of secret number.
+    puts  messages[:lose]
+  end
+  
+  
+end
