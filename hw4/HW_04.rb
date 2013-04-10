@@ -34,3 +34,69 @@
 # Student's Solution
 #
 ###############################################################################
+
+set_of_numbers = (1..10).to_a
+puts set_of_numbers
+
+secret_number = set_of_numbers.sample
+messages = Hash.new
+messages[:win] = "You won. You guessed my secret number"
+messages[:lose] = "You have no guesses left. The secret number is " + secret_number.to_s
+messages[:too_low] = "Your guess is lower than my secret number"
+messages[:too_high] = "Your guess is higher than my secret number"
+
+puts "Hello There my name is Charlie. I am the creator of this game."
+puts "Please type in your name."
+player_name = gets.strip
+puts "Hi " + player_name + "!"
+puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
+
+guess_count = 0
+def increment_guess_count(guess_count)
+    guess_count += 1;
+end
+
+def guesses_left(guess_count)
+    return 3 - guess_count.to_i
+end
+
+while 1
+    
+  if guess_count < 3
+    puts "You have " + guesses_left(guess_count).to_s + " guesses left"  # Notify player on guesses left.
+  elsif guess_count == 3
+    # Notify player when no guesses left and inform player of secret number.
+    puts  messages[:lose]
+    exit
+  end
+
+  
+  puts "Please guess the secret number."
+  player_guess = gets.strip.to_i
+  guess_count = increment_guess_count(guess_count)
+  # If player guesses secret number inform player that he won
+  if player_guess == secret_number
+    
+    puts  messages[:win]
+    exit
+    
+  elsif player_guess != secret_number  
+    
+    if player_guess > secret_number
+        # Notify player if guess higher than secret number
+      
+        puts messages[:too_high]
+    
+    elsif player_guess < secret_number
+        # Notify player if guess is lower than secret number.
+      
+        puts messages[:too_low]
+
+    end
+  
+  end
+
+end
+
+  
+
