@@ -19,7 +19,7 @@ class Game
     @guesses_allowed = guesses_allowed
     @current_guess_count = 0
     @player = Player.new
-    @secret_number = SecretNumber.new
+    @secret_number = SecretNumber.new(set_of_numbers)
     @current_guess = nil
   end
   
@@ -31,7 +31,6 @@ class Game
 
   end
   
-
 	# Calls `print_created_by` so that your players knows you created the game.
 	# Asks the player to enter his/her name. Save it to @player.name.
 	# Print out the number of guesses the players gets and the range of numbers they can choose from.
@@ -49,14 +48,10 @@ class Game
     
     while 1
         puts "Please guess the secret number."
-        player_guess = gets.strip.to_i
-        correct = guess_correct(player_guess)
-        
-        # If correct guess then output win message and exit program
-        if correct == 1
-            puts
-        else        # guess is incorrect. Guesses_left should decrease
-            
+        @current_guess = gets.strip.to_i
+        correct = guess_correct(@current_guess)
+        if correct || guesses_left == 0
+            exit            
         end
         
     end
@@ -64,29 +59,33 @@ class Game
 
   end
 
-
 	# This method checks if the player guessed the correct secret number. 
     # It shoudl print out if they guessed correctly or guessed too high or too low.
 	# Use the `@@messages` Hash to display this feedback.
 	# Also let the player know how many guesses they have left.
 	# If the guess is correct, make sure to return true, otherwise return false.
   def guess_correct?(guess)
-    if # secret_number == guess
-       return 1
-    else
-        return 0
+    if  @secret_number == guess
+        puts @@messages[:win]
+        return true
+    elsif @secret_number > guess
+        puts @@messages[:too_low]
+        return false
+    elsif @secret_number < guess
+        puts @@messages[:too_high]
+        return false
     end
     
   end
 
   # This method should increment every time the player guesses incorrectly.
-  def increment_guess_count(guess_count)
-    guess_count += 1;
+  def increment_guess_count
+    @current_guess_count += 1;
   end
   
   # Calculates the guesses the player has left.
-  def guesses_left(guess)
-    return 3 - guess_count.to_i 
+  def guesses_left(guess_count)
+    return 3 - @current_guess_count
   end
 
 end

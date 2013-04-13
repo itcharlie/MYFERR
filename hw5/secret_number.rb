@@ -9,7 +9,8 @@ class SecretNumber
 	# 	(You should default the range of numbers to 1 - 10 if parameter is null.)
 	# Initializes the secret number
 	def initialize(set_of_numbers=(1..10))
-        @set_of_numbers = set_of_numbers
+        @set_of_numbers = set_of_numbers.to_a
+        puts @set_of_numbers.inspect
         @secret_number = generate_secret_number(@set_of_numbers)
   	end
 

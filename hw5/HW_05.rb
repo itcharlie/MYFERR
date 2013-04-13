@@ -24,10 +24,14 @@
 ###############################################################################
 
 #	Include the Player, SecretNumber, and Game classes
-
+$LOAD_PATH.unshift(File.dirname(__FILE__))
+require 'player'
+require 'secret_number'
+require  'game'
 
 #   Instantiate a new Game (using your preferred number of guesses, range of numbers)
-
+set_of_nums = (1..10).to_a
+game = Game.new(set_of_nums)
 
 #   Start the Game. 
-
+game.start_game
