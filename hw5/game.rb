@@ -15,16 +15,19 @@ class Game
 	# Creates a new instance of the SecretNumber class and assigns it to the secret_number. Don't forget to pass along the
 	# necessary parameters.
   	# initializes the current guess to nil
-  def initialize(guesses_allowed, set_of_numbers)
-
-
-
+  def initialize(guesses_allowed=3, set_of_numbers)
+    @guesses_allowed = guesses_allowed
+    @current_guess_count = 0
+    @player = Player.new
+    @secret_number = SecretNumber.new
+    @current_guess = nil
   end
   
 
   # Print who made this wonderful program :-)
   def print_created_by
-
+    puts "Hello There my name is Charlie. I am the creator of this game."
+    puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
 
   end
   
@@ -35,41 +38,56 @@ class Game
 	# Asks the player for his/her guess. Use the `guess_correct?` method to verify the guess.
 	# Continue to ask the user to guess the number so long as they have not maximized the number of guesses allowed 
 	# and they did not guess correctly. 
-  # Each time tell the player how many guesses left they have.
+    # Each time tell the player how many guesses left they have.
 	# If at the end of the loop they still did not guess correctly, tell the player that they have lost using the
 	# `@@messages` class variable and tell them the secret number.
   def start_game
-
-
+    print_created_by
+    @player.name = gets.strip
+    puts "Hi #{@player.name}!"
+    puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
+    
+    while 1
+        puts "Please guess the secret number."
+        player_guess = gets.strip.to_i
+        correct = guess_correct(player_guess)
+        
+        # If correct guess then output win message and exit program
+        if correct == 1
+            puts
+        else        # guess is incorrect. Guesses_left should decrease
+            
+        end
+        
+    end
 
 
   end
 
 
-
 	# This method checks if the player guessed the correct secret number. 
-  # It shoudl print out if they guessed correctly or guessed too high or too low.
+    # It shoudl print out if they guessed correctly or guessed too high or too low.
 	# Use the `@@messages` Hash to display this feedback.
 	# Also let the player know how many guesses they have left.
 	# If the guess is correct, make sure to return true, otherwise return false.
   def guess_correct?(guess)
-
-
-
+    if # secret_number == guess
+       return 1
+    else
+        return 0
+    end
+    
   end
-
 
   # This method should increment every time the player guesses incorrectly.
-  def increment_guess_count
-    
-    
+  def increment_guess_count(guess_count)
+    guess_count += 1;
   end
   
-
   # Calculates the guesses the player has left.
-  def guesses_left
-  
-  
+  def guesses_left(guess)
+    return 3 - guess_count.to_i 
   end
+
 end
 
