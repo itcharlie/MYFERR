@@ -27,8 +27,6 @@ class Game
   # Print who made this wonderful program :-)
   def print_created_by
     puts "Hello There my name is Charlie. I am the creator of this game."
-    puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
-
   end
   
 	# Calls `print_created_by` so that your players knows you created the game.
@@ -42,15 +40,22 @@ class Game
 	# `@@messages` class variable and tell them the secret number.
   def start_game
     print_created_by
+    @player = Player.new
+    puts "Please type in your name"
     @player.name = gets.strip
-    puts "Hi #{@player.name}!"
-    puts "You will have 3 chances to guess my secret number. My secret number is between 1 and 10"
+    puts "\nHi #{@player.name}!"
+    puts "You will have #{ guesses_left } chances to guess my secret number. My secret number is between 1 and 10"
     
     while 1
         puts "Please guess the secret number."
         @current_guess = gets.strip.to_i
-        correct = guess_correct(@current_guess)
-        if correct || guesses_left == 0
+        increment_guess_count
+        correct = guess_correct?(@current_guess)
+        if correct
+            exit
+        elsif guesses_left == 0
+            puts @@messages[:lose]
+            puts "\nThe secret number was #{ @secret_number.secret_number}"
             exit            
         end
         
@@ -65,14 +70,16 @@ class Game
 	# Also let the player know how many guesses they have left.
 	# If the guess is correct, make sure to return true, otherwise return false.
   def guess_correct?(guess)
-    if  @secret_number == guess
+    if  @secret_number.secret_number == guess
         puts @@messages[:win]
         return true
-    elsif @secret_number > guess
+    elsif @secret_number.secret_number > guess
         puts @@messages[:too_low]
+        puts "You have #{ guesses_left } guesses left"
         return false
-    elsif @secret_number < guess
+    elsif @secret_number.secret_number < guess
         puts @@messages[:too_high]
+        puts "You have #{ guesses_left } guesses left"
         return false
     end
     
@@ -84,7 +91,7 @@ class Game
   end
   
   # Calculates the guesses the player has left.
-  def guesses_left(guess_count)
+  def guesses_left
     return 3 - @current_guess_count
   end
 
